@@ -20,3 +20,7 @@ https://openinverter.org/forum/viewtopic.php?f=10&t=575
 
 -Added solder jumper for optional single 5v power supply.
 
+
+Please note design source files will be only available via Patreon for a period of time:
+
+https://www.patreon.com/evbmw
