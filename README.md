@@ -24,3 +24,7 @@ https://openinverter.org/forum/viewtopic.php?f=10&t=575
 Please note design source files will be only available via Patreon for a period of time:
 
 https://www.patreon.com/evbmw
+
+02/10/20 : V2 board now fully tested in an M3 Rear drive unit and working very well on the bench.
+<br>At this time I have decided to do a full opensource release of all design sources:)
+<br>More updates and video to following including testing in a M3 front DU.
