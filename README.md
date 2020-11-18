@@ -28,3 +28,5 @@ https://www.patreon.com/evbmw
 02/10/20 : V2 board now fully tested in an M3 Rear drive unit and working very well on the bench.
 <br>At this time I have decided to do a full opensource release of all design sources:)
 <br>More updates and video to following including testing in a M3 front DU.
+
+18/11/20 : Uploaded spreadsheet work in progress for mapping the pin assignments of the TMS320F28377D MCU.
