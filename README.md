@@ -30,3 +30,5 @@ https://www.patreon.com/evbmw
 <br>More updates and video to following including testing in a M3 front DU.
 
 18/11/20 : Uploaded spreadsheet work in progress for mapping the pin assignments of the TMS320F28377D MCU.
+
+21/11/20 : Discovered an eeprom on the back of the pcb. Logic analyser captures uploaded.
