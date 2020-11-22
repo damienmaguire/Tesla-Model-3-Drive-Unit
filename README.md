@@ -31,4 +31,4 @@ https://www.patreon.com/evbmw
 
 18/11/20 : Uploaded spreadsheet work in progress for mapping the pin assignments of the TMS320F28377D MCU.
 
-21/11/20 : Discovered an eeprom on the back of the pcb. Logic analyser captures uploaded.
+21/11/20 : Discovered an eeprom on the back of the pcb. Logic analyser captures uploaded. All logic analyser captures made using Saleae logic. Free software available here :https://www.saleae.com/downloads/
