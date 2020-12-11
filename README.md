@@ -34,3 +34,5 @@ https://www.patreon.com/evbmw
 21/11/20 : Discovered an eeprom on the back of the pcb. Logic analyser captures uploaded. All logic analyser captures made using Saleae logic. Free software available here :https://www.saleae.com/downloads/
 
 02/12/20 : Big thanks to Colin Kidder (https://github.com/collin80) for the explanation of the STGAP1AS SPI gate driver traffic. PDF uploaded to the Gate SPI folder.
+
+11/12/20 : Big thanks again to Colin Kidder (https://github.com/collin80) for the explanation of the TLF SPI power supply traffic. PDF uploaded to the TLF SPI folder.
