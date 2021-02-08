@@ -36,3 +36,5 @@ https://www.patreon.com/evbmw
 02/12/20 : Big thanks to Colin Kidder (https://github.com/collin80) for the explanation of the STGAP1AS SPI gate driver traffic. PDF uploaded to the Gate SPI folder.
 
 11/12/20 : Big thanks again to Colin Kidder (https://github.com/collin80) for the explanation of the TLF SPI power supply traffic. PDF uploaded to the TLF SPI folder.
+
+08/02/21 : We have a new modboard : https://vimeo.com/509198907
