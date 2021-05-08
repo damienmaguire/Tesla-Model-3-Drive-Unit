@@ -38,3 +38,5 @@ https://www.patreon.com/evbmw
 11/12/20 : Big thanks again to Colin Kidder (https://github.com/collin80) for the explanation of the TLF SPI power supply traffic. PDF uploaded to the TLF SPI folder.
 
 08/02/21 : We have a new modboard : https://vimeo.com/509198907
+
+08/05/21 : Added V3 modboard pdf schematic and board layout. Turns out Mr.Musk almost made a fool of me....again! 
