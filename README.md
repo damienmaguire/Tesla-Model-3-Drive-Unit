@@ -40,3 +40,5 @@ https://www.patreon.com/evbmw
 08/02/21 : We have a new modboard : https://vimeo.com/509198907
 
 08/05/21 : Added V3 modboard pdf schematic and board layout. Turns out Mr.Musk almost made a fool of me....again! 
+
+18/10/21 : Added design files for USB to JTAG adapter board.
