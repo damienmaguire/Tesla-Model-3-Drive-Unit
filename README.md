@@ -46,3 +46,5 @@ https://www.patreon.com/evbmw
 19/03/23 : Add first temp sensor calibration data
 
 30/03/23 : Running : https://vimeo.com/809120859
+
+15/08/24 : Added a very early schematic of the gate driver section for use in the PCB replacement project.
