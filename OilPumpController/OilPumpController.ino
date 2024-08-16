@@ -42,6 +42,10 @@ static const PumpMessages AllPumpMessages[] = { PumpMessages::Command,
 
 typedef std::array<uint8_t, 8> MessageData;
 
+// Pump temperatures seem to be offset by 40 degrees Celsius
+// This makes sense given typical automotive temp ranges
+static const int8_t TempOffset = 40;
+
 static void PrintError(LIN_Master::error_t error)
 {
     if (error == LIN_Master::NO_ERROR)
@@ -65,11 +69,57 @@ static void PrintError(LIN_Master::error_t error)
         Serial.print("misc ");
 }
 
-static void PrintMessage(const MessageData& data)
+static void PrintMessage(PumpMessages id, const MessageData& data)
 {
-    for (auto b : data)
+    switch (id)
     {
-        Serial.printf("%#.2x ", b);
+    case PumpMessages::Command:
+        break;
+
+    case PumpMessages::Status1:
+        Serial.printf("%#.2x ", data[0]);
+        Serial.printf("%#.2x ", data[1]);
+        Serial.printf("%#.2x ", data[2]);
+        Serial.printf("Temp1: %d ", data[3] - TempOffset);
+        Serial.printf("%#.2x ", data[4]);
+        Serial.printf("Temp2: %d ", data[5] - TempOffset);
+        Serial.printf("%#.2x ", data[6]);
+        Serial.printf("%#.2x ", data[7]);
+        break;
+
+    case PumpMessages::Status2:
+        Serial.printf("%#.2x ", data[0]);
+        Serial.printf("%#.2x ", data[1]);
+        Serial.printf("%#.2x ", data[2]);
+        Serial.printf("%#.2x ", data[3]);
+        Serial.printf("%#.2x ", data[4]);
+        Serial.printf("%#.2x ", data[5]);
+        Serial.printf("%#.2x ", data[6]);
+        Serial.printf("%#.2x ", data[7]);
+        break;
+
+    case PumpMessages::Status3:
+        Serial.printf("Supply: %.1f [V] ", data[0] * 0.1);
+        Serial.printf("%#.2x ", data[1]);
+        Serial.printf("%#.2x ", data[2]);
+        Serial.printf("%#.2x ", data[3]);
+        Serial.printf("%#.2x ", data[4]);
+        ;
+        Serial.printf("%#.2x ", data[5]);
+        Serial.printf("%#.2x ", data[6]);
+        Serial.printf("%#.2x ", data[7]);
+        break;
+
+    case PumpMessages::Status4:
+        Serial.printf("%#.2x ", data[0]);
+        Serial.printf("Current: %.1f [A] ", data[1] * 0.1);
+        Serial.printf("%#.2x ", data[2]);
+        Serial.printf("Temp3: %d ", data[3] - TempOffset);
+        Serial.printf("Temp4: %d ", data[4] - TempOffset);
+        Serial.printf("Temp5: %d ", data[5] - TempOffset);
+        Serial.printf("Temp6: %d ", data[6] - TempOffset);
+        Serial.printf("%#.2x ", data[7]);
+        break;
     }
 }
 
@@ -148,7 +198,7 @@ void loop()
             }
             else
             {
-                PrintMessage(data);
+                PrintMessage(id, data);
             }
         }
 
