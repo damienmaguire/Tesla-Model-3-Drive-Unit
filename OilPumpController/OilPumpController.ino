@@ -69,56 +69,113 @@ static void PrintError(LIN_Master::error_t error)
         Serial.print("misc ");
 }
 
+static void PrintHeader()
+{
+    Serial.print("\r\n\nTime [ms], ");
+
+    // PumpMessages::Command
+    Serial.print("Speed_Request, ");
+
+    // PumpMessages::Status1
+    Serial.print("2A_Byte0, 2A_Byte1, 2A_Byte2, Fluid_Temp, ");
+    Serial.print("2A_Byte4, Pump_Temp, 2A_Byte6, 2A_Byte7, ");
+
+    // PumpMessages::Status2
+    Serial.print("32_Byte0, 32_Byte1, 32_Byte2, 32_Byte3, ");
+    Serial.print("32_Byte4, 32_Byte5, 32_Byte6, 32_Byte7, ");
+
+    // PumpMessages::Status3
+    Serial.print("Supply_Voltage, 30_Byte1, 30_Byte2, 30_Byte3, ");
+    Serial.print("30_Byte4, 30_Byte5, 30_Byte6, 30_Byte7, ");
+
+    // PumpMessages::Status4
+    Serial.print("31_Byte0, Supply_Current, 31_Byte2, Temp3, ");
+    Serial.print("Temp4, Temp5, Temp6, 31_Byte7");
+    Serial.println();
+}
+
 static void PrintMessage(PumpMessages id, const MessageData& data)
 {
     switch (id)
     {
     case PumpMessages::Command:
+        Serial.print(data[1]);
+        Serial.print(", ");
         break;
 
     case PumpMessages::Status1:
-        Serial.printf("%#.2x ", data[0]);
-        Serial.printf("%#.2x ", data[1]);
-        Serial.printf("%#.2x ", data[2]);
-        Serial.printf("Temp1: %d ", data[3] - TempOffset);
-        Serial.printf("%#.2x ", data[4]);
-        Serial.printf("Temp2: %d ", data[5] - TempOffset);
-        Serial.printf("%#.2x ", data[6]);
-        Serial.printf("%#.2x ", data[7]);
+        Serial.print(data[0]);
+        Serial.print(", ");
+        Serial.print(data[1]);
+        Serial.print(", ");
+        Serial.print(data[2]);
+        Serial.print(", ");
+        Serial.print(data[3] - TempOffset); // Fluid_Temp
+        Serial.print(", ");
+        Serial.print(data[4]);
+        Serial.print(", ");
+        Serial.print(data[5] - TempOffset); // Pump_Temp
+        Serial.print(", ");
+        Serial.print(data[6]);
+        Serial.print(", ");
+        Serial.print(data[7]);
+        Serial.print(", ");
         break;
 
     case PumpMessages::Status2:
-        Serial.printf("%#.2x ", data[0]);
-        Serial.printf("%#.2x ", data[1]);
-        Serial.printf("%#.2x ", data[2]);
-        Serial.printf("%#.2x ", data[3]);
-        Serial.printf("%#.2x ", data[4]);
-        Serial.printf("%#.2x ", data[5]);
-        Serial.printf("%#.2x ", data[6]);
-        Serial.printf("%#.2x ", data[7]);
+        Serial.print(data[0]);
+        Serial.print(", ");
+        Serial.print(data[1]);
+        Serial.print(", ");
+        Serial.print(data[2]);
+        Serial.print(", ");
+        Serial.print(data[3]);
+        Serial.print(", ");
+        Serial.print(data[4]);
+        Serial.print(", ");
+        Serial.print(data[5]);
+        Serial.print(", ");
+        Serial.print(data[6]);
+        Serial.print(", ");
+        Serial.print(data[7]);
+        Serial.print(", ");
         break;
 
     case PumpMessages::Status3:
-        Serial.printf("Supply: %.1f [V] ", data[0] * 0.1);
-        Serial.printf("%#.2x ", data[1]);
-        Serial.printf("%#.2x ", data[2]);
-        Serial.printf("%#.2x ", data[3]);
-        Serial.printf("%#.2x ", data[4]);
-        ;
-        Serial.printf("%#.2x ", data[5]);
-        Serial.printf("%#.2x ", data[6]);
-        Serial.printf("%#.2x ", data[7]);
+        Serial.print(data[0] * 0.1); // Supply_Voltage
+        Serial.print(", ");
+        Serial.print(data[1]);
+        Serial.print(", ");
+        Serial.print(data[2]);
+        Serial.print(", ");
+        Serial.print(data[3]);
+        Serial.print(", ");
+        Serial.print(data[4]);
+        Serial.print(", ");
+        Serial.print(data[5]);
+        Serial.print(", ");
+        Serial.print(data[6]);
+        Serial.print(", ");
+        Serial.print(data[7]);
+        Serial.print(", ");
         break;
 
     case PumpMessages::Status4:
-        Serial.printf("%#.2x ", data[0]);
-        Serial.printf("Current: %.1f [A] ", data[1] * 0.1);
-        Serial.printf("%#.2x ", data[2]);
-        Serial.printf("Temp3: %d ", data[3] - TempOffset);
-        Serial.printf("Temp4: %d ", data[4] - TempOffset);
-        Serial.printf("Temp5: %d ", data[5] - TempOffset);
-        Serial.printf("Temp6: %d ", data[6] - TempOffset);
-        Serial.printf("%#.2x ", data[7]);
+        Serial.print(data[0]);
+        Serial.print(", ");
+        Serial.print(data[1] * 0.1); // Supply_Current
+        Serial.print(", ");
+        Serial.print(data[2]);
+        Serial.print(", ");
+        Serial.print(data[3] - TempOffset); // Temp3
+        Serial.print(", ");
+        Serial.print(data[4] - TempOffset); // Temp4
+        Serial.print(", ");
+        Serial.print(data[5] - TempOffset); // Temp5
+        Serial.print(", ");
+        Serial.print(data[6] - TempOffset); // Temp6
+        Serial.print(", ");
+        Serial.print(data[7]);
         break;
     }
 }
@@ -144,6 +201,7 @@ void setup()
     while (!Serial)
         ;
 
+    PrintHeader();
 } // setup()
 
 // call repeatedly
@@ -171,21 +229,33 @@ void loop()
         newChar = Serial.read();
     }
 
+    Serial.print(millis());
+    Serial.print(", ");
+
     for (auto id : AllPumpMessages)
     {
-        Serial.printf("%.8u ID: %#.2x ", millis(), id);
         LIN_Master::error_t error;
+        MessageData         data;
         if (id == PumpMessages::Command)
         {
-            Serial.printf("Speed: %.3u ", speed);
-            uint8_t Tx[2] = { 0xff, speed };
+            // The first byte of the command is always 0xff in Tesla captures
+            // changing it seems to do nothing
+            data[0] = 0xff;
+            data[1] = speed;
             error = LIN.sendMasterRequestBlocking(
-                LIN_Master::LIN_V2, static_cast<uint8_t>(id), 2, Tx);
-            PrintError(error);
+                LIN_Master::LIN_V2, static_cast<uint8_t>(id), 2, data.data());
+
+            if (error)
+            {
+                PrintError(error);
+            }
+            else
+            {
+                PrintMessage(id, data);
+            }
         }
         else
         {
-            MessageData data;
             error = LIN.receiveSlaveResponseBlocking(
                 LIN_Master::LIN_V2,
                 static_cast<uint8_t>(id),
@@ -205,17 +275,18 @@ void loop()
         // indicate status via pin
         digitalWrite(PIN_ERROR, error);
 
-        Serial.println();
+        if (id == PumpMessages::Status4)
+            Serial.println();
 
         // reset state machine & error
         LIN.resetStateMachine();
         LIN.resetError();
+    }
 
-        // wait a bit. Toggle pin to show CPU load
-        uint32_t delayStart = millis();
-        while (millis() - delayStart < LIN_PAUSE)
-        {
-            digitalWrite(PIN_TOGGLE, !digitalRead(PIN_TOGGLE));
-        }
+    // wait a bit. Toggle pin to show CPU load
+    uint32_t delayStart = millis();
+    while (millis() - delayStart < LIN_PAUSE)
+    {
+        digitalWrite(PIN_TOGGLE, !digitalRead(PIN_TOGGLE));
     }
 } // loop()
