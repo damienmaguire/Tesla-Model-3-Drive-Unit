@@ -77,11 +77,11 @@ static void PrintHeader()
     Serial.print("Speed_Request, ");
 
     // PumpMessages::Status1
-    Serial.print("2A_Byte0, 2A_Byte1, 2A_Byte2, Fluid_Temp, ");
+    Serial.print("2A_Byte0, Flow, Pressure, Fluid_Temp, ");
     Serial.print("2A_Byte4, Pump_Temp, 2A_Byte6, 2A_Byte7, ");
 
     // PumpMessages::Status2
-    Serial.print("32_Byte0, 32_Byte1, 32_Byte2, 32_Byte3, ");
+    Serial.print("32_Byte0, 32_Byte1, 32_Byte2, Motor_Speed, ");
     Serial.print("32_Byte4, 32_Byte5, 32_Byte6, 32_Byte7, ");
 
     // PumpMessages::Status3
@@ -106,9 +106,9 @@ static void PrintMessage(PumpMessages id, const MessageData& data)
     case PumpMessages::Status1:
         Serial.print(data[0]);
         Serial.print(", ");
-        Serial.print(data[1]);
+        Serial.print(data[1]); // Flow
         Serial.print(", ");
-        Serial.print(data[2]);
+        Serial.print(data[2]); // Pressure
         Serial.print(", ");
         Serial.print(data[3] - TempOffset); // Fluid_Temp
         Serial.print(", ");
@@ -148,7 +148,7 @@ static void PrintMessage(PumpMessages id, const MessageData& data)
         Serial.print(", ");
         Serial.print(data[2]);
         Serial.print(", ");
-        Serial.print(data[3]);
+        Serial.print(data[3]); // Motor_Speed
         Serial.print(", ");
         Serial.print(data[4]);
         Serial.print(", ");
