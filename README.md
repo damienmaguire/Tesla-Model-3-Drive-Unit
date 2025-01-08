@@ -1,6 +1,8 @@
 # Tesla-Model-3-Drive-Unit
-Open Source logic board for the Tesla Model 3 rear drive unit. PCB Files in DesignSpark 9 format.Based on the inverter designed by Johannes Heubner using FOC control.
+Open Source logic board for the Tesla Model 3 rear drive unit. PCB Files in DesignSpark 9 and Kicad 8 format.Based on the inverter designed by Johannes Heubner using FOC control.
 <br>
+![Screenshot from 2025-01-08 18-51-52](https://github.com/user-attachments/assets/b7f1be79-28bd-49b1-98d1-5fdaf6de3171)
+
 <br>
 13/03/20 : Added CAN logs from both CAN busses from the rear drive unit inverter powered on the bench.
 
