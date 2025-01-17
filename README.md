@@ -52,3 +52,5 @@ https://www.patreon.com/evbmw
 15/08/24 : Added a very early schematic of the gate driver section for use in the PCB replacement project.
 
 24/10/24 : Updated schematic of the gate driver power supply section for use in the PCB replacement project.
+
+17/01/25 : Updated schematic and PCB layout to latest "complete" V1 version.
