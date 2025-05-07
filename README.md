@@ -54,3 +54,8 @@ https://www.patreon.com/evbmw
 24/10/24 : Updated schematic of the gate driver power supply section for use in the PCB replacement project.
 
 17/01/25 : Updated schematic and PCB layout to latest "complete" V1 version.
+
+07/05/25 : First prototypes undergoing test.
+
+
+![board_jlc_powerup](https://github.com/user-attachments/assets/40a378ad-6385-4834-8268-7bbb4e7ee89f)
