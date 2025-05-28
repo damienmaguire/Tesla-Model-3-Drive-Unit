@@ -59,3 +59,7 @@ https://www.patreon.com/evbmw
 
 
 ![board_jlc_powerup](https://github.com/user-attachments/assets/40a378ad-6385-4834-8268-7bbb4e7ee89f)
+
+28/05/25 : Testing continues. First motor spins :
+
+https://youtu.be/JKbsiIRJ8mo
