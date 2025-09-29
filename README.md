@@ -63,3 +63,7 @@ https://www.patreon.com/evbmw
 28/05/25 : Testing continues. First motor spins :
 
 https://youtu.be/JKbsiIRJ8mo
+
+29/09/25 : V2 board now runs on HV : https://vimeo.com/1122427765
+
+Added V3 Schematic and board layout.
