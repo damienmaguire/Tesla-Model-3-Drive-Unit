@@ -64,8 +64,9 @@ https://www.patreon.com/evbmw
 
 https://youtu.be/JKbsiIRJ8mo
 
-26/10/25 : The V3 works. https://youtu.be/QYh9N8k0tf8
 
 29/09/25 : V2 board now runs on HV : https://vimeo.com/1122427765
 
 Added V3 Schematic and board layout.
+
+26/10/25 : The V3 works. https://youtu.be/QYh9N8k0tf8
