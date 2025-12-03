@@ -72,3 +72,7 @@ Added V3 Schematic and board layout.
 26/10/25 : The V3 works. https://youtu.be/QYh9N8k0tf8
 
 18/11/25 : First in car tests : https://youtu.be/6yrDDHRgUPQ also added pinout diagram.
+
+03/12/25 : Updated 30 pin connector pinout and added a DXF of the OEM board derived from a laser scan.
+
+
