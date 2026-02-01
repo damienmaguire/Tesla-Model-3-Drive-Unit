@@ -75,4 +75,5 @@ Added V3 Schematic and board layout.
 
 03/12/25 : Updated 30 pin connector pinout and added a DXF of the OEM board derived from a laser scan.
 
+01/02/26 : Uploaded V3.2 schematic and pcb layout. First order of boards on the way!
 
