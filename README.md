@@ -77,3 +77,4 @@ Added V3 Schematic and board layout.
 
 01/02/26 : Uploaded V3.2 schematic and pcb layout. First order of boards on the way!
 
+26/02/26 : Added capture of the gate driver SPI from a Model 3 front drive unit inverter.
