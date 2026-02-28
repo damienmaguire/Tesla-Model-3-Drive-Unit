@@ -75,6 +75,12 @@ Added V3 Schematic and board layout.
 
 03/12/25 : Updated 30 pin connector pinout and added a DXF of the OEM board derived from a laser scan.
 
+
+
 01/02/26 : Uploaded V3.2 schematic and pcb layout. First order of boards on the way!
+
+28/02/26 : V3.2 board now undergoing testing.
+![V32_1](https://github.com/user-attachments/assets/f091fabf-dc45-443f-85fa-59875a56430a)
+
 
 26/02/26 : Added capture of the gate driver SPI from a Model 3 front drive unit inverter.
