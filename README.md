@@ -84,5 +84,5 @@ Added V3 Schematic and board layout.
 28/02/26 : V3.2 board now undergoing testing.
 ![V32_1](https://github.com/user-attachments/assets/f091fabf-dc45-443f-85fa-59875a56430a)
 
-
+07/03/26 : I have made the decision to fully opensource the V3.2 design. Almost six years of work in here by myself and others so please respect that.
 
