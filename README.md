@@ -86,3 +86,5 @@ Added V3 Schematic and board layout.
 
 07/03/26 : I have made the decision to fully opensource the V3.2 design. Almost six years of work in here by myself and others so please respect that.
 
+09/04/26 : An amazing contribution : https://github.com/jrbe/Tesla-Model-3-Current-Sensor-Block
+           Prototypes on order.
