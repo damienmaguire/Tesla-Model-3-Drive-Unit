@@ -1,0 +1,261 @@
+<!--
+  30-Pin Connector Pinout Diagram — editable source
+  Recreates OI_Pinout.png from the Tesla-Model-3-Drive-Unit repo.
+
+  TO EDIT ANY PIN: change its entry in the PINS array in the <script> block below.
+    - oem / oi : the two label lines. Any value of "Not Connected" renders greyed + italic.
+    - wire     : wire-colour name (see WIRE_COLORS map). "N/A" renders muted.
+    - connected: true = blue pin, false = grey pin.
+  Pin 23 was changed from "Not Connected" to "Actv Disch Disable +12V" (regular black).
+
+  TO REGENERATE THE PNG: open this file in a browser and click the "Download PNG" button.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>30-Pin Connector Pinout Diagram</title>
+<style>
+  * { box-sizing: border-box; }
+  html { height: 100%; }
+  body {
+    margin: 0; padding: 22px;
+    background: #eef1f6;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(135deg, #a855f7 0%, #6366f1 55%, #3b82f6 100%);
+  }
+  .frame {
+    width: fit-content; margin: 0 auto;
+    -background: linear-gradient(135deg, #a855f7 0%, #6366f1 55%, #3b82f6 100%);
+    -border-radius: 24px;
+    padding: 11px;
+  }
+  .panel {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 30px 34px 26px;
+  }
+  .title {
+    text-align: center;
+    font-size: 30px; font-weight: 800; letter-spacing: .2px;
+    color: #1e293b;
+    margin: 6px 0 26px;
+  }
+  .board {
+    background: #2b3a52;
+    border-radius: 14px;
+    padding: 40px 20px 26px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(10, max-content);
+    column-gap: 12px; row-gap: 45px;
+  }
+  .pin { position: relative; margin-top: 22px; }
+  .num {
+    position: absolute; top: -32px; left: 50%; transform: translateX(-50%);
+    width: 42px; height: 42px; border-radius: 50%;
+    background: #3b82f6; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 700;
+    box-shadow: 0 0 0 3px rgba(59,130,246,.22), 0 2px 4px rgba(0,0,0,.35);
+    z-index: 2;
+  }
+  .num.off {
+    background: #8ea0b5;
+    box-shadow: 0 0 0 3px rgba(142,160,181,.22), 0 2px 4px rgba(0,0,0,.3);
+  }
+  .dot {
+    position: absolute; bottom: -3px; left: 50%; transform: translateX(-50%);
+    width: 10px; height: 10px; border-radius: 50%;
+    border: 2px solid #2b3a52;
+  }
+  .card {
+    background: #fff; border: 1px solid #e2e8f0; border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.12);
+    padding: 8px 12px 12px;
+  }
+  .field { margin-bottom: 12px; }
+  .field:last-child { margin-bottom: 0; }
+  .label {
+    font-size: 10px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: .5px; color: #64748b; margin-bottom: 3px; white-space: nowrap;
+  }
+  .value { font-size: 10px; font-weight: 500; color: #1e293b; line-height: 1.25; white-space: nowrap; }
+  .value.muted { font-style: italic; font-weight: 400; color: #94a3b8; }
+  .pill {
+    display: block; padding: 3px 10px; border-radius: 5px;
+    font-size: 12px; font-weight: 600;
+  }
+  .pill.na {
+    background: #f1f5f9; color: #94a3b8; border: 1px solid #e2e8f0;
+    font-weight: 500; font-style: italic;
+  }
+  .legend {
+    margin-top: 22px; background: #f8fafc; border-radius: 10px;
+    padding: 16px; display: flex; justify-content: center; gap: 40px; align-items: center;
+  }
+  .legend-item { display: flex; align-items: center; gap: 9px; font-size: 15px; color: #334155; }
+  .legend-dot { width: 18px; height: 18px; border-radius: 50%; }
+  .controls { text-align: center; margin: 0 auto 16px; }
+  .controls button {
+    font: inherit; font-size: 14px; font-weight: 600;
+    color: #4f46e5; background: #fff; border: none; border-radius: 8px;
+    padding: 9px 18px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,.2);
+  }
+  .controls button:hover { background: #eef2ff; }
+</style>
+</head>
+<body>
+  <div class="controls">
+    <button onclick="downloadPNG()">Download PNG</button>
+  </div>
+  <div class="frame"><div class="panel">
+    <div class="title">30-Pin Connector Pinout Diagram</div>
+    <div class="board"><div class="grid" id="grid"></div></div>
+    <div class="legend">
+      <div class="legend-item"><span class="legend-dot" style="background:#3b82f6"></span>Connected Pin</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#8ea0b5"></span>Not Connected</div>
+    </div>
+  </div></div>
+
+<script>
+// wire-colour name -> pill background / text colour, and the small indicator dot colour
+const WIRE_COLORS = {
+  "White":               { bg:"#ffffff", fg:"#1f2937", bd:"#cbd5e1" },
+  "Blue":                { bg:"#2563eb", fg:"#ffffff" },
+  "Green":               { bg:"#16a34a", fg:"#ffffff" },
+  "Violet":              { bg:"#7c3aed", fg:"#ffffff" },
+  "Yellow":              { bg:"#eab308", fg:"#ffffff" },
+  "Red":                 { bg:"#dc2626", fg:"#ffffff" },
+  "Black":               { bg:"#1f2937", fg:"#ffffff" },
+  "Brown":               { bg:"#8a4b1f", fg:"#ffffff" },
+  "Brown / White":       { bg:"#8a4b1f", fg:"#ffffff" },
+  "Gray":                { bg:"#6b7280", fg:"#ffffff" },
+  "Yellow / Light Blue": { bg:"#0d9aa8", fg:"#ffffff" },
+  "N/A":                 { bg:"#f1f5f9", fg:"#94a3b8", na:true }
+};
+
+const PINS = [
+  { n:1,  oem:"Proximity",             oi:"Start Input",         wire:"White",  connected:true },
+  { n:2,  oem:"PT-CAN-",               oi:"CAN-",                wire:"Blue",   connected:true },
+  { n:3,  oem:"Switched +12V",         oi:"Switched +12V",       wire:"Green",  connected:true },
+  { n:4,  oem:"HVIL out",              oi:"Reverse Input",       wire:"White",  connected:true },
+  { n:5,  oem:"Accel 2 ground",        oi:"Accel 2 ground",      wire:"Violet", connected:true },
+  { n:6,  oem:"Accel 1 ground",        oi:"Accel 1 ground",      wire:"Yellow", connected:true },
+  { n:7,  oem:"Resolver Sine -",       oi:"Resolver Sine -",     wire:"Red",    connected:true },
+  { n:8,  oem:"Resolver Cosine +",     oi:"Resolver Cosine +",   wire:"Violet", connected:true },
+  { n:9,  oem:"Not Connected",         oi:"Forward Input",       wire:"N/A",    connected:true },
+  { n:10, oem:"Oil Pump Status",       oi:"Oil Pump Status",     wire:"Brown / White", connected:true },
+  { n:11, oem:"Brake NO",              oi:"Brake NO",            wire:"Red",    connected:true },
+  { n:12, oem:"PT-CAN+",               oi:"CAN+",                wire:"Black",  connected:true },
+  { n:13, oem:"GND",                   oi:"GND",                 wire:"Brown",  connected:true },
+  { n:14, oem:"Accel 2 +5V",           oi:"Accel 2 +5V",         wire:"Brown",  connected:true },
+  { n:15, oem:"Accel 1 +5V",           oi:"Accel 1 +5V",         wire:"Red",    connected:true },
+  { n:16, oem:"Resolver Excitation -", oi:"Resolver Excitation -", wire:"Black", connected:true },
+  { n:17, oem:"Resolver Sine +",       oi:"Resolver Sine +",     wire:"Green",  connected:true },
+  { n:18, oem:"Stator temp -",         oi:"Motor NTC2",          wire:"N/A",    connected:true },
+  { n:19, oem:"Not Connected",         oi:"Not Connected",       wire:"N/A",    connected:false },
+  { n:20, oem:"PRTY-CAN-",             oi:"Not Connected",       wire:"Yellow", connected:true },
+  { n:21, oem:"Brake NC",              oi:"Not Connected",       wire:"Brown",  connected:true },
+  { n:22, oem:"Unswitched +12V",       oi:"Unswitched +12V",     wire:"Violet", connected:true },
+  { n:23, oem:"HVIL in",               oi:"Active Disch Disable +12V", wire:"Red", connected:true }, // <-- CHANGED
+  { n:24, oem:"Accel 2 signal",        oi:"Accel 2 Signal",      wire:"Green",  connected:true },
+  { n:25, oem:"Accel 1 signal",        oi:"Accel 1 Signal",      wire:"Gray",   connected:true },
+  { n:26, oem:"Resolver Excitation +", oi:"Resolver Excitation +", wire:"Yellow", connected:true },
+  { n:27, oem:"Resolver Cosine -",     oi:"Resolver Cosine -",   wire:"Blue",   connected:true },
+  { n:28, oem:"Stator temp +",         oi:"Motor NTC1",          wire:"White",  connected:true },
+  { n:29, oem:"Not Connected",         oi:"Not Connected",       wire:"N/A",    connected:false },
+  { n:30, oem:"PRTY-CAN+",             oi:"Not Connected",       wire:"Yellow / Light Blue", connected:true }
+];
+
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const isMuted = v => v.trim() === "Not Connected";
+
+function valueHtml(v){
+  return `<div class="value${isMuted(v) ? " muted" : ""}">${esc(v)}</div>`;
+}
+function pillHtml(wire){
+  const c = WIRE_COLORS[wire] || { bg:"#e2e8f0", fg:"#334155" };
+  if (c.na) return `<span class="pill na">${esc(wire)}</span>`;
+  const border = c.bd ? `border:1px solid ${c.bd};` : "";
+  return `<span class="pill" style="background:${c.bg};color:${c.fg};${border}">${esc(wire)}</span>`;
+}
+function dotColor(wire){
+  const c = WIRE_COLORS[wire];
+  if (!c || c.na) return "#cbd5e1";
+  return c.bg;
+}
+
+document.getElementById("grid").innerHTML = PINS.map(p => {
+  const dc = dotColor(p.wire);
+  const dotBorder = (p.wire === "White") ? "border-color:#cbd5e1;" : "";
+  return `
+  <div class="pin">
+    <div class="num${p.connected ? "" : " off"}">${p.n}
+      <span class="dot" style="background:${dc};${dotBorder}"></span>
+    </div>
+    <div class="card">
+      <div class="field"><div class="label">OEM</div>${valueHtml(p.oem)}</div>
+      <div class="field"><div class="label">OpenInverter</div>${valueHtml(p.oi)}</div>
+      <div class="field"><div class="label">Wire</div>${pillHtml(p.wire)}</div>
+    </div>
+  </div>`;
+}).join("");
+
+// Equalize every card to a single width: the minimum at which no card's text wraps.
+// (With columns at max-content each card spans its column, so the widest card's width
+//  is exactly that minimum. Re-measured on load, so it stays correct if you edit labels.)
+(function equalizeCards(){
+  const grid = document.getElementById("grid");
+  let w = 0;
+  grid.querySelectorAll(".card").forEach(c => {
+    w = Math.max(w, Math.ceil(c.getBoundingClientRect().width));
+  });
+  grid.style.gridTemplateColumns = `repeat(10, ${w}px)`;
+})();
+
+// --- PNG export: renders the diagram to a 2x PNG, no screenshot, no dependencies ---
+// Captures the .frame plus the page's gradient background (now on <body>) so the export
+// matches what's on screen. Serializes into an SVG <foreignObject> and paints to a canvas.
+// Works in Chromium/Firefox; if Safari misbehaves, open this file in Chrome.
+async function renderToDataURL(){
+  const frame = document.querySelector('.frame');
+  const bs = getComputedStyle(document.body);
+  const pad = parseInt(bs.paddingTop) || 22;
+  const w = frame.offsetWidth + pad * 2;
+  const h = frame.offsetHeight + pad * 2;
+  const scale = 2;
+  const css = document.querySelector('style').textContent;
+  const frameHtml = new XMLSerializer().serializeToString(frame);
+  const wrapStyle = `width:${w}px; min-height:${h}px; padding:${pad}px; box-sizing:border-box; background-image:${bs.backgroundImage};`;
+  const svg =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="' + (w*scale) + '" height="' + (h*scale) +
+    '" viewBox="0 0 ' + w + ' ' + h + '">' +
+      '<foreignObject width="' + w + '" height="' + h + '">' +
+        '<div xmlns="http://www.w3.org/1999/xhtml" style="' + wrapStyle + '">' +
+          '<style>' + css + '</style>' + frameHtml +
+        '</div>' +
+      '</foreignObject></svg>';
+  const img = new Image();
+  img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  await img.decode();
+  const canvas = document.createElement('canvas');
+  canvas.width = w*scale; canvas.height = h*scale;
+  canvas.getContext('2d').drawImage(img, 0, 0);
+  return canvas.toDataURL('image/png');
+}
+async function downloadPNG(){
+  try {
+    const url = await renderToDataURL();
+    const a = document.createElement('a');
+    a.href = url; a.download = 'OI_Pinout.png';
+    document.body.appendChild(a); a.click(); a.remove();
+  } catch(e){
+    alert('Export failed: ' + e.message + '\nTry opening this file in Chrome.');
+  }
+}
+</script>
+</body>
+</html>
